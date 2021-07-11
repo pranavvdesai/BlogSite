@@ -15,12 +15,11 @@ var expressLayouts = require('express-ejs-layouts');
 const { debug } = require('console');
 
 app.use(sassMiddleware({
-  src: '/assets/scss',
-  dest: '/assets/css',
+  src: './assets/scss',
+  dest: './assets/css',
   debug: true,
   outputStyle: 'extended',
   prefix: '/css'
-
 
 }))
 app.use(express.urlencoded());
