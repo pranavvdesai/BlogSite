@@ -1,3 +1,25 @@
 <link href="css/users.css" rel="stylesheet" type="text/css">
+<body>
 
-<h1>hey</h1>
+<section>
+    <form action="/users/postcreate" method="POST">
+        <textarea name="content" cols="30" rows="10"></textarea>
+        <input type="submit" value="Post">
+    </form>
+</section>
+<section>
+    
+    <% for(post of posts){ %>
+        <div><%= post.content %></div>
+
+    <%}%> 
+</section>
+
+
+
+
+
+
+
+
+</body>
