@@ -4,6 +4,12 @@ const passport = require('passport')
 
 
 const usersController = require('../controllers/users_controller')
+const postController = require('../controllers/post_controller')
+
+
+
+router.post('/postcreate',postController.createPost)
+
 
 router.get('/profile',passport.checkAuthentication,usersController.profile)
 
