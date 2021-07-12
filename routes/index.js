@@ -6,11 +6,11 @@ const homeController = require('../controllers/home_controller')
 const postscontroller = require('../controllers/showpost')
 const nth = require('../controllers/nth')
 
-router.get('/',homeController.register)
+router.get('/register',homeController.register)
 router.post('/create',homeController.create)
 
 router.get('/login',homeController.login)
-router.get('/users',passport.checkAuthentication,postscontroller.showPost)
+router.get('/',postscontroller.showPost)
 
 router.post('/create-session', passport.authenticate('local',{failureRedirect: '/'}), homeController.loginvalidation)
 

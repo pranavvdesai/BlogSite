@@ -8,7 +8,7 @@ const postController = require('../controllers/post_controller')
 
 
 
-router.post('/postcreate',postController.createPost)
+router.post('/postcreate',passport.checkAuthentication,postController.createPost)
 
 
 router.get('/profile',passport.checkAuthentication,usersController.profile)
