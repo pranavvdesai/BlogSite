@@ -50,7 +50,7 @@ passport.checkAuthentication = (req, res, next) => {
     return next();
   }
   // if the user is not signed in
-  return res.redirect('/');
+  return res.redirect('/register');
 };
 
 passport.setAuthenticatedUser = (req, res, next) => {
