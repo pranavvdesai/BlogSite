@@ -54,3 +54,6 @@ module.exports.logout = (req, res) => {
   req.logout();
   return res.redirect('/');
 };
+
+//bi
+//hi
