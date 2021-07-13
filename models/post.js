@@ -10,6 +10,13 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
+    // include the array of ids of all comments in this post schema itself --> creating schema for comments video 13
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comments'
+      }
+    ]
   },
   { timestamps: true }
 );
