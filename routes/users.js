@@ -10,6 +10,8 @@ const commentController = require('../controllers/comment_controller')
 
 router.post('/postcreate',passport.checkAuthentication,postController.createPost)
 router.post('/commentcreate',passport.checkAuthentication,commentController.createComment)
+router.get('/delete/:id',passport.checkAuthentication,postController.destroy)
+router.get('/deletecomment/:id',passport.checkAuthentication,commentController.deletecomment)
 
 
 router.get('/profile',passport.checkAuthentication,usersController.profile)
