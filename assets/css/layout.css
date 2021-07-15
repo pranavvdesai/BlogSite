@@ -3,3 +3,6 @@ body {
   body #layout-main {
     height: 100vh;
     color: chartreuse; }
+  body .comment-box {
+    display: flex;
+    color: black; }
