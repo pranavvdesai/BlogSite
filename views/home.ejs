@@ -1,27 +1,43 @@
-<link href="css/users.css" rel="stylesheet" type="text/css">
+<link href="css/users.css" rel="stylesheet" type="text/css" />
 <body>
-<%if(locals.user){%>
-<section>
-    <form action="/users/postcreate" method="POST">
-        <textarea name="content" cols="30" rows="10"></textarea>
-        <input type="submit" value="Post">
+  <%if(locals.user){%>
+  <section>
+    <form action="/users/postcreate" method="POST" >
+      <textarea name="content" cols="30" rows="10" required></textarea>
+      <input type="submit" value="Post" />
     </form>
-</section>
-<%}%>
-<section>
-    <% for(post of posts){ %>
-        <div><%= post.content %>
+  </section>
+  <%}%>
+  <section>
+    <% for(post of posts){ %> 
+        
+        <div>
+        <%= post.content %>
         <small><%= post.user.name %></small>
+          <%if(locals.user && locals.user.id == post.user.id){%>
+            <small><a href="/users/delete/<%= post._id %>">Delete</a></small>       
+          <%}%>
+        <%if(locals.user){%>
+        <form action="/users/commentcreate" method="POST">
+            <textarea name="content" cols="10" rows="1" required></textarea>
+            <input type="hidden" name="post" value="<%= post._id %>" />
+            <input type="submit" value="comment" />
+        </form>
+        <%}%>
+        <br/>
+        
+        <% for(comment of post.comments){ %> 
+        <div class="comment-box">
+        <div><%= comment.content%></div>
+        <small><%=comment.user.name%></small>
+        <%if(locals.user && locals.user.id == comment.user.id || locals.user && locals.user.id == post.user.id){%>
+          <small><a href="/users/deletecomment/<%=comment._id %>">Delete comment</a></small>
+        <%}%>
         </div>
+        <%}%>
 
-    <%}%> 
-</section>
-
-
-
-
-
-
-
-
+        </div>
+       <br>
+    <%}%>
+  </section>
 </body>
