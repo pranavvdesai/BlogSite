@@ -1,5 +1,5 @@
 var Post = require("../models/post");
-
+const User = require("../models/user")
 // module.exports.showPost = (req,res)=>{
 //     Post.find({},(err,posts)=>{
 //         if(err){
@@ -36,11 +36,10 @@ module.exports.showPost = (req, res) => {
       }
     })
     .exec((err, posts) => {
-      if (err) {
-        console.log("err in showing");
-        return;
-      }
-      return res.render("home", { posts: posts });
+      User.find({},(err,user)=>{
+        return res.render("home", { posts: posts, user_all: user });
+
+      })
     });
 };
 
