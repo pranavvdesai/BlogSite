@@ -15,4 +15,13 @@
         
     <%}%>
   </section>
+  <section>
+    <% for(user of user_all){ %> 
+      <div><a href="/users/profile/<%= user.id %>"><%= user.name %></a>
+        </div>
+        
+      
+        
+    <%}%>
+  </section>
 </body>
