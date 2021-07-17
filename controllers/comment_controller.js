@@ -22,7 +22,7 @@ module.exports.createComment = (req,res)=>{
 
 module.exports.deletecomment = (req,res)=>{       
     Comment.findById(req.params.id,(err,comment)=>{
-        if(comment.user == req.user.id || comment.post.user == req.user.id){
+        if(comment.user == req.user.id || comment.post.user == req.user._id){
             let postId = comment.post
 
             comment.remove()
