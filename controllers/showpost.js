@@ -1,5 +1,5 @@
 var Post = require("../models/post");
-const User = require("../models/user")
+const User = require("../models/user");
 // module.exports.showPost = (req,res)=>{
 //     Post.find({},(err,posts)=>{
 //         if(err){
@@ -24,22 +24,19 @@ const User = require("../models/user")
 //     });
 // };
 
-
 module.exports.showPost = (req, res) => {
   Post.find({})
     .populate("user")
     // nested population where we populate comments and inside the comments the user of each comments
     .populate({
-      path:"comments",
+      path: "comments",
       populate: {
-        path:"user"
-      }
+        path: "user",
+      },
     })
     .exec((err, posts) => {
-      User.find({},(err,user)=>{
+      User.find({}, (err, user) => {
         return res.render("home", { posts: posts, user_all: user });
-
-      })
+      });
     });
 };
-
