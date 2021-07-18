@@ -7,7 +7,7 @@ const usersController = require('../controllers/users_controller')
 const postController = require('../controllers/post_controller')
 const commentController = require('../controllers/comment_controller')
 const profileController = require('../controllers/profile_controller')
-const updateController = require('../controllers/update_profile')
+// const updateController = require('../controllers/update_profile')
 
 
 router.post('/postcreate',passport.checkAuthentication,postController.createPost)
