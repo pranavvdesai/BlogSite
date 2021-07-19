@@ -43,15 +43,19 @@ module.exports.create = (req, res) => {
   });
 };
 
+// sign in and create a session
 module.exports.loginvalidation = (req, res) => {
   // branch
 
   // using passport
+  req.flash("success", "You have successfully logged in");
   return res.redirect("/");
 };
 
 module.exports.logout = (req, res) => {
   req.logout();
+  req.flash("success", "You have successfully logged out");
+
   return res.redirect("/");
 };
 
