@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/pranavvdesai/BlogSite#readme",
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "connect-mongo": "^4.4.1",
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",
