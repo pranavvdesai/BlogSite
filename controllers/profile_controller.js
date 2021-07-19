@@ -16,10 +16,12 @@ module.exports.update = (req, res) => {
       req.params.id,
       { name: req.body.profile_name, email: req.body.profile_email },
       (err, user) => {
+        req.flash("success", "Profile updated.");
         return res.redirect("back");
       }
     );
   } else {
+    req.flash("error", "You can only edit your own profile.");
     return res.status(401).send("unauthorised");
   }
 };
