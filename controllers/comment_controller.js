@@ -35,11 +35,12 @@ module.exports.createComment = async (req, res) => {
 
       post.comments.push(comment);
       post.save();
+      req.flash("success", "Comment successfully added");
 
       return res.redirect("back");
     }
   } catch (err) {
-    console.log("err in creating comment");
+    req.flash("error", "Error while adding comment");
     return;
   }
 };
@@ -75,15 +76,17 @@ module.exports.deletecomment = async (req, res) => {
     if (comment.user == req.user.id || comment.post.user == req.user.id) {
       let postId = comment.post;
       comment.remove();
+      req.flash("success", "Comment successfully deleted");
        await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
       return res.redirect("back");
     } else {
+      req.flash("error", "You don't have permission to delete this comment");
       return res.redirect("back");
     }
   } catch (err) {
-    console.log("err in deleting comment");
+    req.flash("error", "Error while deleting comment");
     return;
   }
 };
