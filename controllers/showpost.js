@@ -24,8 +24,29 @@ const User = require("../models/user");
 //     });
 // };
 
-module.exports.showPost = (req, res) => {
-  Post.find({})
+// normal method
+// module.exports.showPost = (req, res) => {
+//   Post.find({})
+//     .populate("user")
+//     // nested population where we populate comments and inside the comments the user of each comments
+//     .populate({
+//       path: "comments",
+//       populate: {
+//         path: "user",
+//       },
+//     })
+//     .exec((err, posts) => {
+//       User.find({}, (err, user) => {
+//         return res.render("home", { posts: posts, user_all: user });
+//       });
+//     });
+//   }
+
+// async await method
+module.exports.showPost = async (req, res) => {
+try{
+  // populate the user of each post
+  let posts = await Post.find({})
     .populate("user")
     // nested population where we populate comments and inside the comments the user of each comments
     .populate({
@@ -34,9 +55,15 @@ module.exports.showPost = (req, res) => {
         path: "user",
       },
     })
-    .exec((err, posts) => {
-      User.find({}, (err, user) => {
-        return res.render("home", { posts: posts, user_all: user });
-      });
-    });
+    
+    let user= await User.find({})
+    return res.render("home", { posts: posts, user_all: user });
+
+}
+catch(err){
+  console.log(err);
+  return
+}
+  
 };
+
