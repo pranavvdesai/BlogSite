@@ -45,7 +45,6 @@ module.exports.createComment = async (req, res) => {
   }
 };
 
-
 // module.exports.deletecomment = (req, res) => {
 //   Comment.findById(req.params.id)
 //   .populate("post")
@@ -77,7 +76,7 @@ module.exports.deletecomment = async (req, res) => {
       let postId = comment.post;
       comment.remove();
       req.flash("success", "Comment successfully deleted");
-       await Post.findByIdAndUpdate(postId, {
+      await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
       return res.redirect("back");
