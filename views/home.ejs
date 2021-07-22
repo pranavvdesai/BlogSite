@@ -1,14 +1,14 @@
-<link href="css/users.css" rel="stylesheet" type="text/css" />
-<body>
+<link href="/css/users.css" rel="stylesheet"/>
+
   <%if(locals.user){%>
-  <section>
-    <form action="/users/postcreate" method="POST" >
+  <section class="secction">
+    <form action="/users/postcreate" id="new-post" method="POST" >
       <textarea name="content" cols="30" rows="10" required></textarea>
       <input type="submit" value="Post" />
     </form>
   </section>
   <%}%>
-  <section>
+  <section id="post-container">
     <% for(post of posts){ %> 
         
       <%- include('posts') -%>
@@ -24,4 +24,5 @@
         
     <%}%>
   </section>
-</body>
+  <script src="/js/home_post.js"></script>
+
