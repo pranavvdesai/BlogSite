@@ -1,8 +1,9 @@
-<div class="post">
+<div id="post-<%= post.id %>">
+  <div class="post">
     <%= post.content %>
     <small><%= post.user.name %></small>
       <%if(locals.user && locals.user.id == post.user.id){%>
-        <small><a href="/users/delete/<%= post._id %>">Delete</a></small>       
+        <small><a class="delete-post" href="/users/delete/<%= post._id %>">Delete</a></small>       
       <%}%>
     <%if(locals.user){%>
     <form action="/users/commentcreate" method="POST">
@@ -18,4 +19,6 @@
     <%}%>
 
     </div>
+  </div>
+
    <br>
