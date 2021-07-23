@@ -47,6 +47,7 @@ module.exports.showPost = async (req, res) => {
 try{
   // populate the user of each post
   let posts = await Post.find({})
+     .sort('-createdAt')
     .populate("user")
     // nested population where we populate comments and inside the comments the user of each comments
     .populate({
