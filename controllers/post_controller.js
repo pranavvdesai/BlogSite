@@ -16,11 +16,24 @@ const Comment = require("../models/comments");
 
 module.exports.createPost = async (req, res) => {
   try {
-    await Post.create({ content: req.body.content, user: req.user._id });
-    req.flash('success',"Post Created");
+    let post = await Post.create({
+      content: req.body.content,
+      user: req.user._id,
+    });
+
+    if (req.xhr) {
+      res.status(200).json({
+        data: {
+          post: post,
+        },
+        message: "Post Created",
+      });
+    }
+
+    req.flash("success", "Post Created");
     return res.redirect("back");
   } catch (err) {
-    req.flash('error',err);
+    req.flash("error", err);
     return;
   }
 };
@@ -46,14 +59,24 @@ module.exports.destroy = async (req, res) => {
     if (post.user == req.user.id) {
       post.remove();
       await Comment.deleteMany({ post: req.params.id });
-      req.flash('success',"Post Removed");
+
+      if (req.xhr) {
+        res.status(200).json({
+          data: {
+            post_id: req.params.id,
+          },
+          message: "Post Deleted",
+        });
+      }
+
+      req.flash("success", "Post Removed");
       return res.redirect("back");
     } else {
-      req.flash('error',"You can't delete this post");
+      req.flash("error", "You can't delete this post");
       return res.redirect("back");
     }
   } catch (err) {
-    req.flash('error',err);
+    req.flash("error", err);
     return;
   }
 };
