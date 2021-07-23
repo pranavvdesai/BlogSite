@@ -33,6 +33,15 @@ module.exports.createComment = async (req, res) => {
         post: req.body.post,
       });
 
+      if (req.xhr) {
+        res.status(200).json({
+          data: {
+            comment: comment,
+          },
+          message: "Comment successfully created",
+        });
+      }
+
       post.comments.push(comment);
       post.save();
       req.flash("success", "Comment successfully added");
@@ -79,6 +88,15 @@ module.exports.deletecomment = async (req, res) => {
       await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
+      if (req.xhr) {
+        res.status(200).json({
+          data: {
+            comment_id: req.params.id,
+          },
+          message: "Comment Deleted",
+        });
+      }
+
       return res.redirect("back");
     } else {
       req.flash("error", "You don't have permission to delete this comment");
