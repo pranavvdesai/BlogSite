@@ -27,12 +27,17 @@ app.use(express.urlencoded());
 
 app.use(cookieParser());
 
-app.set('view engine', 'ejs');
-app.set('views', './views');
 app.use(express.static('./assets'))
 app.use(expressLayouts);
 
+// extract style and scripts from sub pages into the layout
+app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
+
+
+// set up the view engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 // mongo store is used to store the session cookie in the db
 app.use(
