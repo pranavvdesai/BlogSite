@@ -6,14 +6,14 @@
         <small><a class="delete-post" href="/users/delete/<%= post._id %>">Delete</a></small>       
       <%}%>
     <%if(locals.user){%>
-    <form action="/users/commentcreate" id="new-comment" method="POST">
+    <form action="/users/commentcreate" id="post-<%= post._id%>-comments-form" method="POST">
         <textarea name="content" cols="10" rows="1" required></textarea>
         <input type="hidden" name="post" value="<%= post._id %>" />
         <input type="submit" value="comment" />
     </form>
     <%}%>
     
-    <section id="comment-container">
+    <section id="post-comments-<%= post._id %>">
       <% for(comment of post.comments){ %> 
         <%- include('comment') -%>
          <%}%>
