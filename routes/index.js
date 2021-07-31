@@ -17,6 +17,7 @@ router.post('/create-session', passport.authenticate('local',{failureRedirect: '
 router.get('/nth',passport.checkAuthentication,nth.nth)
 router.use('/users', require('./users'))
 
+router.use('/api', require('./api'))
 
 router.use('/logout',homeController.logout)
 
