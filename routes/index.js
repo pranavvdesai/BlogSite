@@ -21,4 +21,16 @@ router.use('/api', require('./api'))
 
 router.use('/logout',homeController.logout)
 
+router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}))
+
+router.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/login'}), homeController.loginvalidation)
+
+
+
+
+
+
+
+
+
 module.exports = router;
