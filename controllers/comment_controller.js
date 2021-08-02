@@ -1,5 +1,6 @@
 const Comment = require("../models/comments");
 const Post = require("../models/post");
+const commentsMailer = require("../mailers/comments-mailer");
 
 // // check if the post actually exist to which the comment has been given, as it can be hampered by inspect elemnet
 // module.exports.createComment = (req, res) => {
@@ -33,8 +34,11 @@ module.exports.createComment = async (req, res) => {
         post: req.body.post,
       });
 
+      post.comments.push(comment);
+      post.save();
+      comment = await comment.populate('user', 'name email').execPopulate();
+      commentsMailer.newComment(comment);
       if (req.xhr) {
-        comment = await comment.populate('user', 'name').execPopulate();
 
         res.status(200).json({
           data: {
@@ -44,8 +48,6 @@ module.exports.createComment = async (req, res) => {
         });
       }
 
-      post.comments.push(comment);
-      post.save();
       req.flash("success", "Comment successfully added");
 
       return res.redirect("back");
