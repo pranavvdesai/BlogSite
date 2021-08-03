@@ -1,6 +1,8 @@
 const Comment = require("../models/comments");
 const Post = require("../models/post");
 const commentsMailer = require("../mailers/comments-mailer");
+const commentEmailWorker = require("../workers/comment_email_worker");
+const queue = require("../config/kue");
 
 // // check if the post actually exist to which the comment has been given, as it can be hampered by inspect elemnet
 // module.exports.createComment = (req, res) => {
@@ -37,7 +39,19 @@ module.exports.createComment = async (req, res) => {
       post.comments.push(comment);
       post.save();
       comment = await comment.populate('user', 'name email').execPopulate();
-      commentsMailer.newComment(comment);
+      // commentsMailer.newComment(comment);
+      // every task u put into queue is a job
+      let job = queue.create('emails-queue', comment).save(function(err) {
+        if (err) {
+          console.log("err in creating queue");
+          return;
+          }
+          console.log(job.id)
+          
+        });
+    
+
+          
       if (req.xhr) {
 
         res.status(200).json({
