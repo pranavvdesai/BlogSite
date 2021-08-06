@@ -1,4 +1,5 @@
 <link href="/css/users.css" rel="stylesheet"/>
+<link href="/css/chatbox.css" rel="stylesheet"/>
 
   <%if(locals.user){%>
   <section class="secction">
@@ -23,6 +24,15 @@
       
         
     <%}%>
+    
   </section>
-  <script src="/js/home_post.js"></script>
+  <%- include('chatbox') -%>
 
+  <script src="/js/home_post.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+  <script src="/js/chat_engine.js"></script>
+  <% if (locals.user){ %>
+    <script>
+        new ChatEngine('user-chat-box', '<%= locals.user.email %>')
+    </script>
+    <% } %>
