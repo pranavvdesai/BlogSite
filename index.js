@@ -10,12 +10,26 @@ const passport = require("passport");
 const passportLocal = require("./config/passport-local-strategy");
 const passportJWT = require("./config/passport-jwt-strategy");
 const passportGoogle = require("./config/passport-google-oauth2-strategy");
+
 const MongoStore = require("connect-mongo");
 const sassMiddleware = require("node-sass-middleware");
 const flash = require("connect-flash");
 const customMiddleware = require("./config/middleware");
-
 var expressLayouts = require("express-ejs-layouts");
+
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://www.differentServerDomain.fr https://www.differentServerDomain.fr");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// setup the chat server to be used with socket.io
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatServer.listen(5000)
+console.log("Chat server listening on port 5000");
+
 
 app.use(
   sassMiddleware({
