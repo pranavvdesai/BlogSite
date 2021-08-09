@@ -1,5 +1,10 @@
 // passport.authenticate('jwt'), this folder extracts the jwt token from the requests the user sends and finds in db
-
+const env = require('./environment')
+// require('dotenv').config(
+//     {
+//       path: `${__dirname}/../.env.${process.env.NODE_ENV}`
+//     }
+//   )
 
 const passport = require('passport');
 const passportJwtStrategy = require('passport-jwt').Strategy;
@@ -9,7 +14,7 @@ const User = require('../models/user');
 let opts = {
     // header --> list of keys having a key called authorization --> list of keys having bearer which contains jwttoken
     jwtFromRequest : ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey : 'pronob'
+    secretOrKey : process.env.JWT_SECRET
 }
 
 passport.use(new passportJwtStrategy(opts, (jwt_payload, done) => {
