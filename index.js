@@ -1,4 +1,11 @@
+require('dotenv').config(
+  {
+    path: `${__dirname}/.env.${process.env.NODE_ENV}`
+  }
+)
+console.log(process.env)
 const express = require("express");
+const env = require("./config/environment");
 const app = express();
 const port = 8000;
 const cookieParser = require("cookie-parser");
@@ -17,34 +24,30 @@ const flash = require("connect-flash");
 const customMiddleware = require("./config/middleware");
 var expressLayouts = require("express-ejs-layouts");
 
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://www.differentServerDomain.fr https://www.differentServerDomain.fr");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 // setup the chat server to be used with socket.io
 const chatServer = require('http').Server(app);
 const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
 chatServer.listen(5000)
 console.log("Chat server listening on port 5000");
+const path = require('path');
 
+if(process.env.NODE_ENV === 'development'){
+  app.use(
+    sassMiddleware({
+      src: path.join(__dirname, process.env.ASSET_PATH, 'scss'),
+      dest: path.join(__dirname, process.env.ASSET_PATH, 'css'),
+      debug: true,
+      outputStyle: "extended",
+      prefix: "/css",
+    })
+  );
+}
 
-app.use(
-  sassMiddleware({
-    src: "./assets/scss",
-    dest: "./assets/css",
-    debug: true,
-    outputStyle: "extended",
-    prefix: "/css",
-  })
-);
 app.use(express.urlencoded());
 
 app.use(cookieParser());
 
-app.use(express.static("./assets"));
+app.use(express.static(process.env.ASSET_PATH));
 // make the uploads path available to the browser
 // app.use('/uploads', express.static(__dirname + './uploads'));
 app.use("/uploads", express.static("uploads"));
@@ -63,7 +66,7 @@ app.set("views", "./views");
 app.use(
   session({
     name: "pranav",
-    secret: "choot",
+    secret: process.env.SESSION_COOKIE_KEY,
     saveUninitialized: false,
     resave: false,
     cookie: {
