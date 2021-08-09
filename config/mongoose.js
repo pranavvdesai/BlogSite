@@ -1,7 +1,8 @@
+const env = require('./environment');
 // require library
 const mongoose = require('mongoose');
 // connect to db
-mongoose.connect('mongodb://localhost/socials_db', {
+mongoose.connect(`mongodb://localhost/${process.env.APP_DB}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
