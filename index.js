@@ -6,6 +6,7 @@ require('dotenv').config(
 console.log(process.env)
 const express = require("express");
 const env = require("./config/environment");
+const logger = require("morgan");
 const app = express();
 const port = 8000;
 const cookieParser = require("cookie-parser");
@@ -43,6 +44,9 @@ if(process.env.NODE_ENV === 'development'){
   );
 }
 
+
+
+
 app.use(express.urlencoded());
 
 app.use(cookieParser());
@@ -51,6 +55,11 @@ app.use(express.static(process.env.ASSET_PATH));
 // make the uploads path available to the browser
 // app.use('/uploads', express.static(__dirname + './uploads'));
 app.use("/uploads", express.static("uploads"));
+
+app.use(logger(env.morgan.mode, env.morgan.options));
+
+
+
 
 app.use(expressLayouts);
 
