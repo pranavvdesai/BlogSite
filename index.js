@@ -8,6 +8,9 @@ const express = require("express");
 const env = require("./config/environment");
 const logger = require("morgan");
 const app = express();
+// pass the app to our middleware
+require('./config/view-helpers')(app);
+
 const port = 8000;
 const cookieParser = require("cookie-parser");
 const db = require("./config/mongoose");
@@ -44,9 +47,6 @@ if(process.env.NODE_ENV === 'development'){
   );
 }
 
-
-
-
 app.use(express.urlencoded());
 
 app.use(cookieParser());
@@ -57,9 +57,6 @@ app.use(express.static(process.env.ASSET_PATH));
 app.use("/uploads", express.static("uploads"));
 
 app.use(logger(env.morgan.mode, env.morgan.options));
-
-
-
 
 app.use(expressLayouts);
 
